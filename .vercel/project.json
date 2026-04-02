@@ -1,0 +1,16 @@
+{
+  "projectId": "prj_wuLq3QrgF1TQhzCOjr80ef5lAsTO",
+  "orgId": "team_0mQPn5Qdtn5HVKXREEPqVWwG",
+  "projectName": "daily",
+  "settings": {
+    "createdAt": 1774199319472,
+    "framework": "vite",
+    "devCommand": null,
+    "installCommand": null,
+    "buildCommand": null,
+    "outputDirectory": null,
+    "rootDirectory": null,
+    "directoryListing": false,
+    "nodeVersion": "24.x"
+  }
+}
