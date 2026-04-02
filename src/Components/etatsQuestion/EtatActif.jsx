@@ -45,18 +45,23 @@ const EtatActif = ({ question, categorie, onSoumettre }) => {
 
   return (
     <div className="etat-actif">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "15px" }}>
-        {categorie && (
+      {categorie && (
+        <div style={{ textAlign: "center", marginBottom: "10px" }}>
           <span className="tag-categorie" style={{ marginBottom: 0 }}>{categorie}</span>
-        )}
+        </div>
+      )}
+
+      <div style={{ textAlign: "center", marginBottom: "15px" }}>
         <span style={{ 
           fontWeight: "bold", 
-          fontSize: "1.1rem",
+          fontSize: "1.2rem",
           color: tempsRestant <= 5 ? "var(--couleur-erreur, red)" : "var(--texte, inherit)",
-          marginLeft: categorie ? "auto" : "0", 
-          display: "inline-block" 
+          display: "inline-block",
+          padding: "6px 16px",
+          borderRadius: "12px",
+          background: tempsRestant <= 5 ? "rgba(239, 68, 68, 0.1)" : "var(--subtil)"
         }}>
-          ⏳ {tempsRestant}s
+          {tempsRestant > 0 ? `⏳ ${tempsRestant}s` : "⏳ Temps écoulé !"}
         </span>
       </div>
 
