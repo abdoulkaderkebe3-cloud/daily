@@ -61,7 +61,7 @@ const EtatActif = ({ question, categorie, onSoumettre }) => {
           borderRadius: "12px",
           background: tempsRestant <= 5 ? "rgba(239, 68, 68, 0.1)" : "var(--subtil)"
         }}>
-          {tempsRestant > 0 ? `⏳ ${tempsRestant}s` : "⏳ Temps écoulé !"}
+          {tempsRestant > 0 ? `${tempsRestant} secondes` : "Temps écoulé !"}
         </span>
       </div>
 
