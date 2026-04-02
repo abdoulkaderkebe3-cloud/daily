@@ -1,10 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppContexte } from "../../Contexte/AppContexte";
 
 const EtatActif = ({ question, categorie, onSoumettre }) => {
   const { t } = useAppContexte();
   const [reponse, setReponse]       = useState("");
   const [chargement, setChargement] = useState(false);
+  const [tempsRestant, setTempsRestant] = useState(15);
+
+  useEffect(() => {
+    if (chargement) return;
+
+    if (tempsRestant <= 0) {
+      // Temps écoulé, on soumet automatiquement une chaîne vide
+      setChargement(true);
+      onSoumettre({ reponse: "" }).finally(() => {
+        setChargement(false);
+        setReponse("");
+      });
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setTempsRestant((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [tempsRestant, chargement, onSoumettre]);
 
   const gererSoumission = async () => {
     if (!reponse.trim()) return;
@@ -23,9 +44,14 @@ const EtatActif = ({ question, categorie, onSoumettre }) => {
 
   return (
     <div className="etat-actif">
-      {categorie && (
-        <span className="tag-categorie">{categorie}</span>
-      )}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "15px" }}>
+        {categorie && (
+          <span className="tag-categorie">{categorie}</span>
+        )}
+        <span style={{ fontWeight: "bold", color: tempsRestant <= 5 ? "var(--couleur-rouge)" : "var(--couleur-texte)" }}>
+          ⏳ {tempsRestant}s
+        </span>
+      </div>
 
       <p className="texte-question">
         {question || "Chargement..."}
