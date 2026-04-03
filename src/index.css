@@ -95,6 +95,12 @@ img { display: block; }
   to   { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -413,29 +419,118 @@ button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 }
 
 .message-erreur {
-  background: rgba(239, 68, 68, 0.1);
+  background: rgba(239, 68, 68, 0.08);
   color: var(--couleur-erreur);
-  border: 1px solid var(--couleur-erreur);
-  padding: 14px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 14px 18px;
   border-radius: var(--rayon-sm);
   margin-bottom: 16px;
   font-size: 0.9rem;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   text-align: left;
-  animation: fadeIn 0.3s;
+  animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.message-erreur.succes {
+  background: rgba(16, 185, 129, 0.08);
+  color: var(--couleur-succes);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.btn-google {
+  background-color: #ffffff !important;
+  color: #3c4043 !important;
+  border: 1px solid #dadce0 !important;
+  height: auto !important; /* On laisse le padding gérer la hauteur comme les autres boutons */
+  padding: 12px 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  transition: background-color .218s, border-color .218s, box-shadow .218s, transform 0.1s !important;
+  border-radius: var(--rayon) !important; /* Même forme que le bouton se connecter */
+  cursor: pointer !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 20px auto 0 !important;
+  overflow: hidden !important;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.1) !important;
+  text-transform: uppercase !important; /* Même style que le bouton se connecter */
+  font-weight: 600 !important;
+  letter-spacing: 1px !important;
+}
+
+.google-icon-wrapper {
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.google-button-text {
+  font-family: var(--police-ui) !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  color: #3c4043 !important;
+  flex: 1;
+  text-align: center;
+}
+
+.btn-google:hover {
+  background-color: #f8f9fa !important;
+  box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15) !important;
+}
+
+.btn-google:active {
+  background-color: #eeeeee !important;
+}
+
+.separate-divider {
+  display: flex;
+  align-items: center;
+  margin: 25px 0 15px;
+  color: var(--texte);
+  opacity: 0.25;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.separate-divider::before, 
+.separate-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--bordure);
+}
+
+.separate-divider span {
+  margin: 0 15px;
 }
 
 .lien-bascule {
-  margin-top: 24px;
-  font-size: 0.9rem;
+  margin-top: 10px;
+  font-size: 0.8rem;
   cursor: pointer;
-  opacity: 0.7;
-  padding: 10px;
-  transition: opacity 0.2s;
+  opacity: 0.5;
+  padding: 6px;
+  transition: all 0.2s;
+  display: inline-block;
+  text-align: center;
+  font-weight: 500;
 }
-.lien-bascule:hover { opacity: 1; text-decoration: underline; }
+
+.lien-bascule:hover { 
+  opacity: 1; 
+  color: var(--accent);
+  transform: scale(1.02);
+}
+
 
 .controles-bas {
   margin-top: 32px;

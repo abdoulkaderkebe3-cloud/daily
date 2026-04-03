@@ -20,11 +20,35 @@ export const connexion = async ({ identite, motDePasse }) => {
   return data;
 };
 
-export const inscription = async ({ pseudo, identite, motDePasse }) => {
-  const { data } = await api.post("/auth/register", {
+export const inscriptionInitiate = async ({ pseudo, identite, motDePasse }) => {
+  const { data } = await api.post("/auth/register/initiate", {
     username: pseudo,
     email: identite,
     password: motDePasse,
+  });
+  return data;
+};
+
+export const inscriptionVerify = async ({ email, code }) => {
+  const { data } = await api.post("/auth/register/verify", {
+    email,
+    code,
+  });
+  return data;
+};
+
+export const motDePasseOublieInitiate = async (email) => {
+  const { data } = await api.post("/auth/password/forgot", {
+    email,
+  });
+  return data;
+};
+
+export const motDePasseOublieVerify = async ({ email, code, newPassword }) => {
+  const { data } = await api.post("/auth/password/reset", {
+    email,
+    code,
+    newPassword,
   });
   return data;
 };

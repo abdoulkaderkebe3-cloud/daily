@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useAppContexte } from "./Contexte/AppContexte";
 import EcranChargement from "./Ecrans/EcranChargement";
 import EcranConnexion from "./Ecrans/EcranConnexion";
-import EcranBienvenue from "./Ecrans/Ecranbienvenue ";
 import EcranApp from "./Ecrans/EcranApp";
+import EcranBienvenue from "./Ecrans/EcranBienvenue";
 import Notification from "./Components/Notification";
-import { connexion, inscription, deconnexion } from "./services/api";
+import { connexion, inscriptionInitiate, inscriptionVerify, motDePasseOublieInitiate, motDePasseOublieVerify, deconnexion } from "./services/api";
 import ImageZoom from "./Components/ImageZoom";
 
 const AppContenu = () => {
@@ -22,8 +22,12 @@ const AppContenu = () => {
     }, 2700); // ← attendre la fin de l'animation
   };
 
-  const gererInscription = async ({ pseudo, identite, motDePasse }) => {
-    const data = await inscription({ pseudo, identite, motDePasse });
+  const gererInscriptionInitiate = async ({ pseudo, identite, motDePasse }) => {
+    await inscriptionInitiate({ pseudo, identite, motDePasse });
+  };
+
+  const gererInscriptionVerify = async ({ email, code }) => {
+    const data = await inscriptionVerify({ email, code });
     const utilisateur = data.user;
     localStorage.setItem("utilisateur", JSON.stringify(utilisateur));
     setAfficherBienvenue(true);
@@ -32,8 +36,12 @@ const AppContenu = () => {
     }, 2700);
   };
 
-  const gererMotDePasseOublie = async (email) => {
-    // TODO : route à confirmer avec le backend
+  const gererMotDePasseOublieInitiate = async (email) => {
+    await motDePasseOublieInitiate(email);
+  };
+
+  const gererMotDePasseOublieVerify = async ({ email, code, newPassword }) => {
+    await motDePasseOublieVerify({ email, code, newPassword });
   };
 
   const gererDeconnexion = async () => {
@@ -61,8 +69,10 @@ const AppContenu = () => {
       {donneesUtilisateur === false && !afficherBienvenue && (
         <EcranConnexion
           onConnexion={gererConnexion}
-          onInscription={gererInscription}
-          onMotDePasseOublie={gererMotDePasseOublie}
+          onInscriptionInitiate={gererInscriptionInitiate}
+          onInscriptionVerify={gererInscriptionVerify}
+          onMotDePasseOublieInitiate={gererMotDePasseOublieInitiate}
+          onMotDePasseOublieVerify={gererMotDePasseOublieVerify}
         />
       )}
 

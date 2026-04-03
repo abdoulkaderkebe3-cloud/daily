@@ -1,11 +1,14 @@
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
 import traductions from "../Traductions/traductions";
 
+// Identité unique du contexte déclarée ici pour éviter les problèmes de modules
 const AppContexte = createContext(null);
 
 export const useAppContexte = () => {
   const contexte = useContext(AppContexte);
-  if (!contexte) throw new Error("useAppContexte doit être utilisé dans AppFournisseur");
+  if (!contexte) {
+    throw new Error("useAppContexte doit être utilisé dans AppFournisseur");
+  }
   return contexte;
 };
 
@@ -89,4 +92,4 @@ export const AppFournisseur = ({ children }) => {
   );
 };
 
-export default AppContexte;
+export { AppContexte };

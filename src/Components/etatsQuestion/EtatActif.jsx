@@ -5,7 +5,7 @@ const EtatActif = ({ question, categorie, onSoumettre }) => {
   const { t } = useAppContexte();
   const [reponse, setReponse]       = useState("");
   const [chargement, setChargement] = useState(false);
-  const [tempsRestant, setTempsRestant] = useState(15);
+  const [tempsRestant, setTempsRestant] = useState(30);
   const autoSoumis = useRef(false);
 
   useEffect(() => {

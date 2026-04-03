@@ -1,15 +1,12 @@
 import { AppFournisseur } from "./Contexte/AppContexte";
 import AppContenu from "./AppContenu";
-function App() {
- 
 
+function App() {
   return (
-    <>
-     <AppFournisseur>
+    <AppFournisseur>
       <AppContenu />
     </AppFournisseur>
-    </>
-  )
+  );
 }
- 
-export default App
+
+export default App;
