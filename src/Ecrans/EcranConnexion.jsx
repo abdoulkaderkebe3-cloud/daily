@@ -156,7 +156,8 @@ const EcranConnexion = ({ onConnexion, onInscriptionInitiate, onInscriptionVerif
   const gererTouche = (e) => { if (e.key === "Enter") gererSoumission(); };
 
   const redirigerVersGoogle = () => {
-    window.location.href = "/api/auth/google";
+    // Utilisation de l'URL absolue du backend Render pour éviter les problèmes de proxy en production
+    window.location.href = "https://daily-muse-letb.onrender.com/auth/google";
   };
 
   let titre = t("titre_connexion");
