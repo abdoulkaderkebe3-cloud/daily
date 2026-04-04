@@ -111,12 +111,16 @@ const EcranConnexion = ({ onConnexion, onInscriptionInitiate, onInscriptionVerif
     setErreur("");
     setMessageSucces("");
     setChargement(true);
+    
+    console.log("Tentative d'action :", mode, { pseudo, identite, code, motDePasse });
+
     try {
       if (mode === "register_init") {
         await onInscriptionInitiate({ pseudo, identite, motDePasse });
         setMessageSucces(t("msg_otp_envoye"));
-        setMode("register_verify"); // Utilisation directe sans cleanup identite
+        setMode("register_verify"); 
       } else if (mode === "register_verify") {
+        console.log("Vérification inscription pour :", identite, "avec code :", code);
         await onInscriptionVerify({ email: identite, code });
       } else if (mode === "forgot_init") {
         await onMotDePasseOublieInitiate(identite);
@@ -204,18 +208,22 @@ const EcranConnexion = ({ onConnexion, onInscriptionInitiate, onInscriptionVerif
           )}
 
           {/* Email / Username */}
-          {(mode === "login" || mode === "register_init" || mode === "forgot_init") && (
+          {(mode === "login" || mode === "register_init" || mode === "forgot_init" || mode === "register_verify" || mode === "forgot_verify") && (
             <input
               type={mode === "login" ? "text" : "email"}
               placeholder={mode === "login" ? t("ph_identite") : "Email"}
               value={identite}
+              readOnly={mode === "register_verify" || mode === "forgot_verify"}
               onChange={(e) => {
-                 setIdentite(e.target.value);
-                 if (errors.identite) setErrors(prev => ({ ...prev, identite: false }));
+                 if (mode !== "register_verify" && mode !== "forgot_verify") {
+                   setIdentite(e.target.value);
+                   if (errors.identite) setErrors(prev => ({ ...prev, identite: false }));
+                 }
               }}
               onKeyDown={gererTouche}
               autoComplete={mode === "login" ? "username" : "email"}
-              className={errors.identite ? "input-erreur" : ""}
+              className={`${errors.identite ? "input-erreur" : ""} ${(mode === "register_verify" || mode === "forgot_verify") ? "input-verrouille" : ""}`}
+              style={(mode === "register_verify" || mode === "forgot_verify") ? { opacity: 0.7, backgroundColor: "#f0f0f0", cursor: "not-allowed" } : {}}
             />
           )}
 
@@ -289,11 +297,11 @@ const EcranConnexion = ({ onConnexion, onInscriptionInitiate, onInscriptionVerif
                 type="button"
                 className="btn-google"
                 onClick={redirigerVersGoogle}
+                title={t("btn_google")}
               >
                 <div className="google-icon-wrapper">
                   <LogoGoogle />
                 </div>
-                <span className="google-button-text">{t("btn_google")}</span>
               </button>
               
               <div style={{ textAlign: "center", width: "100%", marginTop: "15px" }}>
